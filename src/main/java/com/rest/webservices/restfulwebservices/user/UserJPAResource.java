@@ -6,8 +6,12 @@ import jakarta.validation.Valid;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -63,11 +67,12 @@ public class UserJPAResource {
 
     @DeleteMapping("/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
+        System.out.println("id: " + id);
         userRepository.deleteById(id);
     }
 
     @PostMapping("/jpa/users")
-    public ResponseEntity<User> createUser(@Validated @RequestBody User user){
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
         User savedUser = userRepository.save(user);
 
         URI location = ServletUriComponentsBuilder
